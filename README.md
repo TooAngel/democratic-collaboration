@@ -11,6 +11,7 @@ World driven introduces a contribution based weighted voting system
 for merging of pull requests. As soon as you contribute to a project, you get a share or
 responsibility for the progress of the project.
 
+
 Github Pull Request are the main contact point. Reviewing a PR with an
 'Approve' votes for `yes`, 'Request change' is `no`.
 
@@ -21,6 +22,38 @@ If a PR is ready for merge a voting is started (starting `value` 0):
  - If a reviewer 'Approve' the `value` increases by their contribution value.
  - Based on the `value` and `total` of votes is `coefficient` is calculated and
    the PR is merged in `coefficient * (5 + pull_request.commits * 5)) days`.
+
+## Vision
+
+Having clear and automated rules for progressing in open source projects is just the base. Due to the DevOps (or GitOps) idea many operational tasks are now stored in repositories, too, and applied on merge. So the challenge is building (worlddriven) services, which are only maintained via Pull Requests. This provides a new level of trust and a new entity unavailable system data (still searching for a better name). Passwords, service credentials, ... is data which does not necessarily be accesible by humans. This can be maintained and used only in the system.
+
+Example: In one of the company I was working for the employees were using chromeboxes. Within their daily work they had to split and merge PDFs. There are a lot of (free) services out there which just do the job, but they can't be used. What happens with my PDFs, do they store them, do they use them. I hope and guess not, but I'm not sure.
+
+How about a PDF service, open source, world driven, continous deployment. No one has access to any credentials, changes can only be done via public Pull Requests. That should be fine?
+
+## How it Works
+
+    - A Pull Request gets automatic merged after some time.
+    - Contributors of the project can vote by reviewing the Pull Request.
+    - Votes are weighted based on the number of commits on the repository. The according share is added or subtracted from the time to merge.
+    - If it exceeds the default time, more votes against the merge, the merge is not executed.
+
+This way a review can speed up the merge process. Or can prolong or stop it to discuss the concerns.
+
+A status check is used to inform about the time to merge and provides a link for a detailed breakdown.
+
+## Why?
+    - Due to the clear rules it is easy to see what happens with your PR and when it will be merged.
+    - Some open source projects struggle with their maintainer. This way others can still drive the project forward.
+    - Weighting the votes enables the main contributors the most power to stale or block bad PRs or speed things up. On the other hand it can motivate to contribute to increase their own weight.
+    - One fundamental question is the ownership. Currently the owner of the project has anyway full control and can stop or speed up everything. It would be nice if they don't have to.
+
+I'm pretty sure the system can be tricked with certain behavior, that's not the idea. Working on an open source project is collaborating, so most of the tricking can easily solved by communication.
+
+## Current Rules
+    - 10 days, well more then a week, should give everyone enough time to look into
+    - per commit: If a PR has multiple commits the time is increased for each commit. Having multiple commits on a - PR means the feature reaches a certain complexity, hence reviewers should have enough time to review it.
+    - Voting via review: Github reviewing functionality is the perfect place to discuss the PR and express the preference. (Gitlab the same, but not yet implemented)
 
 ## Develop
 
@@ -202,7 +235,6 @@ Run tests with: `pytest`
     "votes_total": 85
 }
 ```
-
 
 ## Production environment
 
